@@ -20,7 +20,7 @@ import { SettingsModal } from './components/SettingsModal';
 
 export default function App() {
   // Screen Flow & Navigation
-  const [screenFlow, setScreenFlow] = useState<ScreenFlow>('main');
+  const [screenFlow, setScreenFlow] = useState<ScreenFlow>('landing');
   const [activeTab, setActiveTab] = useState<ActiveTab>('timer');
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false);
 
