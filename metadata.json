@@ -1,0 +1,6 @@
+{
+  "name": "Kinetic Fast",
+  "description": "A high-performance intermittent fasting tracker with real-time timer, calendar streak logging, progress stats, milestone awards, and customizable plans.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
