@@ -55,7 +55,17 @@ export default function App() {
     return saved ? JSON.parse(saved) : defaultStart;
   });
 
+  type BeforeInstallPromptEvent = Event & {
+    readonly platforms: string[];
+    readonly userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>;
+    prompt: () => Promise<void>;
+  };
+
   const [elapsedSeconds, setElapsedSeconds] = useState<number>(0);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [showInstallPrompt, setShowInstallPrompt] = useState(false);
+  const [installPromptDismissed, setInstallPromptDismissed] = useState(false);
+  const [isAppInstalled, setIsAppInstalled] = useState(false);
 
   // Calculate target duration in seconds for selected plan
   const currentPlan = FASTING_PLANS.find((p) => p.ratio === profile.planRatio) || FASTING_PLANS[2];
@@ -100,6 +110,27 @@ export default function App() {
     return () => clearInterval(interval);
   }, [isFasting, fastStartTime]);
 
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (event: Event) => {
+      event.preventDefault();
+      setDeferredPrompt(event as BeforeInstallPromptEvent);
+      setShowInstallPrompt(true);
+    };
+
+    const handleAppInstalled = () => {
+      setIsAppInstalled(true);
+      setShowInstallPrompt(false);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    window.addEventListener('appinstalled', handleAppInstalled);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('appinstalled', handleAppInstalled);
+    };
+  }, []);
+
   // Actions
   const handleStartFast = () => {
     const now = Date.now();
@@ -133,6 +164,25 @@ export default function App() {
       totalHours: prev.totalHours + addedHours,
       fastsDone: prev.fastsDone + 1,
     }));
+  };
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) {
+      setShowInstallPrompt(false);
+      setInstallPromptDismissed(true);
+      return;
+    }
+
+    deferredPrompt.prompt();
+    const choiceResult = await deferredPrompt.userChoice;
+
+    if (choiceResult.outcome === 'accepted') {
+      setIsAppInstalled(true);
+    } else {
+      setInstallPromptDismissed(true);
+    }
+    setDeferredPrompt(null);
+    setShowInstallPrompt(false);
   };
 
   const handleResetData = () => {
@@ -226,6 +276,34 @@ export default function App() {
         onOpenSettings={() => setIsSettingsOpen(true)}
         onAvatarClick={() => setActiveTab('profile')}
       />
+
+      {showInstallPrompt && !isAppInstalled && !installPromptDismissed && (
+        <div className="mx-4 mt-4 rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur-xl text-sm text-white shadow-lg">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <p className="font-semibold text-white">Install the app</p>
+              <p className="mt-1 text-sm text-white/70">
+                Add Kinetic Fast to your home screen for faster access.
+              </p>
+            </div>
+            <button
+              onClick={handleInstallClick}
+              className="rounded-full bg-[#D8FF00] px-4 py-2 text-sm font-semibold text-black shadow-sm transition hover:bg-[#c5e100] focus:outline-none"
+            >
+              Install
+            </button>
+          </div>
+          <button
+            onClick={() => {
+              setInstallPromptDismissed(true);
+              setShowInstallPrompt(false);
+            }}
+            className="mt-3 text-xs uppercase tracking-[0.2em] text-white/50 hover:text-white"
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
 
       {/* Main View Container */}
       <main className="flex-1">
