@@ -46,7 +46,7 @@ export const ProfileView: React.FC<ProfileViewProps> = ({
       </div>
 
       {/* Profile Metrics Grid */}
-      <div className="grid grid-cols-2 gap-3 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
         {/* Day Streak */}
         <div className="bg-[#1A1A1A] border border-white/5 rounded-2xl p-4 text-center">
           <div className="text-xl font-extrabold font-montserrat text-white">

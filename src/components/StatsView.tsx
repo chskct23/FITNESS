@@ -21,7 +21,7 @@ export const StatsView: React.FC<StatsViewProps> = ({ profile }) => {
   const maxHours = 20;
 
   return (
-    <div className="flex flex-col px-5 pb-24 max-w-md mx-auto space-y-4">
+    <div className="flex flex-col px-5 pb-24 w-full max-w-md mx-auto space-y-4">
       {/* Weekly Fasting Bar Chart */}
       <div className="bg-[#1A1A1A] border border-white/5 rounded-2xl p-5">
         <div className="flex items-center justify-between mb-6">

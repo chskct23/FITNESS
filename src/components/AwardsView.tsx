@@ -25,7 +25,7 @@ export const AwardsView: React.FC<AwardsViewProps> = ({ awards }) => {
   };
 
   return (
-    <div className="flex flex-col px-5 pb-24 max-w-md mx-auto space-y-6">
+    <div className="flex flex-col px-5 pb-24 w-full max-w-md mx-auto space-y-6">
       {/* Title Header */}
       <h2 className="text-xl font-bold font-montserrat text-white pt-2">
         Awards

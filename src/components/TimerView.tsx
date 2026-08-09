@@ -60,8 +60,8 @@ export const TimerView: React.FC<TimerViewProps> = ({
       </div>
 
       {/* Main Timer Dial */}
-      <div className="relative flex items-center justify-center my-4 group">
-        <svg className="w-72 h-72 transform -rotate-90">
+      <div className="relative flex items-center justify-center my-4 group w-full max-w-[18rem]">
+        <svg viewBox="0 0 288 288" className="w-full h-auto transform -rotate-90">
           {/* Background Ring */}
           <circle
             cx="144"

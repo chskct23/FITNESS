@@ -39,7 +39,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ profile, records }) 
   return (
     <div className="flex flex-col px-5 pb-24 max-w-md mx-auto space-y-4">
       {/* Top Stat Summary Cards */}
-      <div className="grid grid-cols-2 gap-3 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
         <div className="bg-[#1A1A1A] border border-white/5 rounded-2xl p-4 text-center">
           <div className="text-3xl font-extrabold font-montserrat text-[#D8FF00] tracking-tight">
             {profile.streakDays}

@@ -217,7 +217,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0D0D0D] text-[#e5e2e1] flex flex-col font-sans max-w-md mx-auto relative border-x border-white/5 shadow-2xl">
+    <div className="min-h-screen w-full bg-[#0D0D0D] text-[#e5e2e1] flex flex-col font-sans max-w-md mx-auto relative border-x border-white/5 shadow-2xl">
       {/* Top Header */}
       <Header
         profile={profile}

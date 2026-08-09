@@ -18,7 +18,7 @@ export const Header: React.FC<HeaderProps> = ({
   onAvatarClick,
 }) => {
   return (
-    <header className="flex items-center justify-between px-5 pt-5 pb-3 bg-[#0D0D0D] sticky top-0 z-30">
+    <header className="flex items-center justify-between px-4 sm:px-5 pt-5 pb-3 bg-[#0D0D0D] sticky top-0 z-30">
       <div className="flex items-center space-x-3">
         <button
           onClick={onAvatarClick || onOpenSettings}
